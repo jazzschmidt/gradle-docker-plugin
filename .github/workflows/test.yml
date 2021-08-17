@@ -38,6 +38,7 @@ jobs:
   
   publish:
     if: github.event_name == 'release' && github.event.action == 'released'
+    needs: test
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
