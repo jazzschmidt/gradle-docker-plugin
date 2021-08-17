@@ -1,4 +1,4 @@
-package com.github.jazzschmidt
+package com.github.jazzschmidt.gradle.docker
 
 import org.gradle.api.internal.file.FileCollectionFactory
 import org.gradle.api.internal.file.copy.DefaultCopySpec

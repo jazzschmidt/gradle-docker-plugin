@@ -1,4 +1,4 @@
-package com.github.jazzschmidt
+package com.github.jazzschmidt.gradle.docker
 
 import java.util.function.Consumer
 

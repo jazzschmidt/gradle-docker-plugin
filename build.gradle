@@ -15,7 +15,7 @@ gradlePlugin {
     plugins {
         dockerPlugin {
             id = 'com.github.jazzschmidt.gradle-docker-plugin'
-            implementationClass = 'com.github.jazzschmidt.DockerPlugin'
+            implementationClass = 'com.github.jazzschmidt.gradle.docker.DockerPlugin'
             description = '''\
             Simple Docker plugin
             '''.stripIndent()

@@ -1,4 +1,4 @@
-package com.github.jazzschmidt
+package com.github.jazzschmidt.gradle.docker
 
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
