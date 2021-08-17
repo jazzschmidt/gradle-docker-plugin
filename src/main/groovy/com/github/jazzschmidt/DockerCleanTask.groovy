@@ -11,7 +11,7 @@ class DockerCleanTask extends DockerTask {
     @TaskAction
     void clean() {
         List<String> tags = project.tasks.withType(DockerTagTask).collect { it.targetTag }
-        execute "rmi ${imageSpec.name} ${tags.join(' ')}"
+        "docker rmi -f ${imageSpec.name} ${imageSpec.name}:${project.version} ${tags.join(' ')}".execute().waitFor()
         project.file("${project.buildDir}/docker").deleteDir()
     }
 

@@ -17,7 +17,15 @@ class DockerTagTask extends DockerTask {
 
     @TaskAction
     void tag() {
-        execute "tag ${imageSpec.name} ${targetTag}"
+        execute "tag ${imageSpec.name} ${getTargetTag()}"
+    }
+
+    String getTargetTag() {
+        if (!targetTag.tokenize('/').last().contains(':')) {
+            return "${targetTag}:${project.version}"
+        } else {
+            return targetTag
+        }
     }
 
 }

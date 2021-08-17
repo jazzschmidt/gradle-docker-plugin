@@ -4,8 +4,8 @@ import java.util.function.Consumer
 
 class DockerRegistryExtension {
 
-    private List<DockerRegistry> registries = []
-    private List<Consumer<DockerRegistry>> createHandlers = []
+    protected List<DockerRegistry> registries = []
+    protected List<Consumer<DockerRegistry>> createHandlers = []
 
     void uploadTo(String name, String url) {
         def registry = new DockerRegistry(name: name, url: url)

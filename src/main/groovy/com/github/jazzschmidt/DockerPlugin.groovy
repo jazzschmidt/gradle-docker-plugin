@@ -1,7 +1,9 @@
 package com.github.jazzschmidt
 
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.Copy
 
 class DockerPlugin implements Plugin<Project> {
 
@@ -21,39 +23,54 @@ class DockerPlugin implements Plugin<Project> {
     private void configureDocker(Project project) {
         def imageSpec = project.extensions.create("dockerImage", DockerImageSpec)
         imageSpec.from(project.file("docker"))
-        imageSpec.name = project.name
+        imageSpec.name = project.name.toLowerCase()
 
-        def assemble = project.task("dockerAssemble", type: DockerAssembleTask)
+        def assemble = project.tasks.register("dockerAssemble", Copy) {
+            group = 'docker'
 
-        def build = project.task("docker", type: DockerBuildTask) {
+            with(imageSpec)
+            into("${project.buildDir}/docker")
+
+            doFirst {
+                project.file("${project.buildDir}/docker").deleteDir()
+            }
+        }
+
+        def build = project.tasks.register("docker", DockerBuildTask) {
             dependsOn assemble
+            inputDir = project.file("${project.buildDir}/docker")
+            image = imageSpec.name
         }
 
-        project.task("dockerClean", type: DockerCleanTask)
+        project.tasks.register("dockerClean", DockerCleanTask)
 
-        project.task("dockerTag", type: DockerTagTask) {
+        project.tasks.register("dockerTag") {
+            group = 'docker'
             dependsOn build
-            targetTag = "${imageSpec.name}:${-> project.version}"
         }
 
-        def pushTask = project.task("dockerPush", group: 'docker')
+        project.tasks.register("dockerPush") {
+            group = 'docker'
+        }
 
         registry.onCreate { registry ->
-            imageSpec.tag(registry.name, "${registry.url}/${imageSpec.name}:${-> project.version}")
+            imageSpec.tag(registry.name, "${registry.url}/${imageSpec.name}")
         }
 
         imageSpec.onCreate { tag ->
             def id = tag.name.capitalize()
-            def tagTask = project.task("dockerTag${id}", type: DockerTagTask) {
+            def tagTask = project.tasks.register("dockerTag${id}", DockerTagTask) {
                 dependsOn build
                 targetTag = tag.tag
             }
 
-            def pushTagTask = project.task("dockerPush${id}", type: DockerPushTask) {
+            def pushTagTask = project.tasks.register("dockerPush${id}", DockerPushTask) {
                 dependsOn tagTask
                 setTag(tag.tag)
             }
-            pushTask.dependsOn(pushTagTask)
+
+            project.tasks.getByName("dockerTag").dependsOn(tagTask)
+            project.tasks.getByName("dockerPush").dependsOn(pushTagTask)
         }
     }
 
