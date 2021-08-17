@@ -1,0 +1,54 @@
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.15.0'
+}
+
+group 'com.github.jazzschmidt'
+version '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+gradlePlugin {
+    plugins {
+        dockerPlugin {
+            id = 'com.github.jazzschmidt.gradle-docker-plugin'
+            implementationClass = 'com.github.jazzschmidt.DockerPlugin'
+            description = '''\
+            Simple Docker plugin
+            '''.stripIndent()
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/jazzschmidt/gradle-docker-plugin'
+    vcsUrl = 'https://github.com/jazzschmidt/gradle-docker-plugin'
+    tags = [
+            'docker'
+    ]
+
+    plugins {
+        dockerPlugin {
+            displayName = 'Gradle Docker Plugin'
+        }
+    }
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation "org.codehaus.groovy:groovy:3.0.8"
+
+    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    testImplementation "org.spockframework:spock-core"
+    testImplementation gradleTestKit()
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
