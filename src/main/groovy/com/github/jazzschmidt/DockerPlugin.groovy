@@ -36,7 +36,7 @@ class DockerPlugin implements Plugin<Project> {
             targetTag = "${imageSpec.name}:${-> project.version}"
         }
 
-        def pushTask = project.task("dockerPush")
+        def pushTask = project.task("dockerPush", group: 'docker')
 
         registry.onCreate { registry ->
             imageSpec.tag(registry.name, "${registry.url}/${imageSpec.name}:${-> project.version}")

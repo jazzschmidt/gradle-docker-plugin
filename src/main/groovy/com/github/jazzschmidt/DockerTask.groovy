@@ -5,6 +5,10 @@ import org.gradle.api.GradleException
 
 abstract class DockerTask extends DefaultTask {
 
+    {
+        group = 'docker'
+    }
+
     private boolean showCommand = false
     private boolean showOutput = false
 
