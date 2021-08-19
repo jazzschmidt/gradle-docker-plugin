@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.github.jazzschmidt'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -17,7 +17,9 @@ gradlePlugin {
             id = 'com.github.jazzschmidt.gradle-docker-plugin'
             implementationClass = 'com.github.jazzschmidt.gradle.docker.DockerPlugin'
             description = '''\
-            Simple Docker plugin
+            Simple to use Gradle Plugin to _build, tag_ and _push_ Docker Images.
+            Supports Multi-Module-Projects, build caching, Java 8 and runs on <b>Gradle 6+</b>
+            and <b>7</b>.
             '''.stripIndent()
         }
     }

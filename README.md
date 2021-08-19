@@ -1,9 +1,10 @@
 # Gradle Docker Plugin
 [![CI](https://github.com/jazzschmidt/gradle-docker-plugin/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/jazzschmidt/gradle-docker-plugin/actions/workflows/test.yml)
-<a href="https://plugins.gradle.org/plugin/com.github.jazzschmidt.gradle-docker-plugin"><img src="https://img.shields.io/badge/Gradle%20Plugin-1.0.0-brightgreen" /></a>
+<a href="https://plugins.gradle.org/plugin/com.github.jazzschmidt.gradle-docker-plugin"><img src="https://img.shields.io/badge/Gradle%20Plugin-1.0.1-brightgreen" /></a>
 
 Simple to use Gradle Plugin to _build, tag_ and _push_ Docker Images.
-Supports Multi-Module-Projects, build caching, Java 8 and runs on **Gradle 7+**. 
+Supports Multi-Module-Projects, build caching, Java 8 and runs on **Gradle 6+**
+and **7+**. 
 
 ## Usage
 
@@ -28,20 +29,19 @@ Suppose the following project structure:
         - src/main/java
             - ...
         - build.gradle
-    - **:plain: project**
-        - build.gradle
 
 With the following `build.gradle`:
 
 ```groovy
 // Project :root:
 plugins {
-    id 'com.github.jazzschmidt.gradle-docker-plugin' version '1.0.0'
+    id 'com.github.jazzschmidt.gradle-docker-plugin' version '1.0.1'
 }
 
 group 'com.example'
 version '0.0.1'
 
+// Define custom docker registries
 dockerRegistry {
     uploadTo("registry", "my-registry.com")
 }
