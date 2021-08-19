@@ -39,9 +39,9 @@ pluginBundle {
 
 dependencies {
     implementation gradleApi()
-    implementation "org.codehaus.groovy:groovy:3.0.8"
+    implementation "org.codehaus.groovy:groovy:2.5.14"
 
-    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-2.5")
     testImplementation "org.spockframework:spock-core"
     testImplementation gradleTestKit()
 }
